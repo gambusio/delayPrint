@@ -1,12 +1,12 @@
+import com.github.gambusio.DelayPrinter;
+
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         int numCopies;
         int delaySeconds;
 
@@ -30,14 +30,8 @@ public class Main {
         delaySeconds = in.nextInt();
         File fileForPrint = fd.getFiles()[0];
 
-        for(int i = 0; i < numCopies; i++) {
-            Desktop.getDesktop().print(fileForPrint);
-            try {
-                TimeUnit.SECONDS.sleep(delaySeconds);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        DelayPrinter delayPrinter = new DelayPrinter(fileForPrint, numCopies, delaySeconds);
+        delayPrinter.print();
         yourJFrame.dispose();
 
     }
